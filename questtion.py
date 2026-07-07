@@ -155,7 +155,7 @@ elif st.session_state['odpowiedz_1'] == "tak":
     st.write("---")
 
     # --- KROK 2 (pojawia się tylko po wybraniu "raczej tak") ---
-    st.markdown('<p class="stHeader vraag pytanie"> Czy nazywać cię swoim chłopakiem? </p>', unsafe_allow_html=True)
+    st.markdown('<p class="stHeader vraag pytanie"> Czy nazywać Cię swoim chłopakiem? </p>', unsafe_allow_html=True)
     st.write("---")
 
     if 'odpowiedz_2' not in st.session_state:
