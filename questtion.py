@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-# Ustawienia strony z ładną czcionką, większym rozmiarem tekstu i fuksjowymi kartami
+# Ustawienia strony, piękna czcionka, karty pytań i kosmiczne tło
 st.markdown(
     """
     <style>
@@ -13,30 +13,40 @@ st.markdown(
         background-color: #FFD1DC;
     }
 
-    /* Ustawienia czcionki dla wszystkich tekstów */
-    .stApp, div[data-testid="stMarkdownContainer"] p, label, button, .stHeader {
+    /* Ustawienia czcionki dla zwykłych tekstów */
+    .stApp, div[data-testid="stMarkdownContainer"] p, label, button {
         font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif !important;
         color: #4A2E35 !important;
         font-size: 24px !important;
     }
 
-    /* Duży i wyśrodkowany tytuł */
+    /* Duży i wyśrodkowany tytuł bezpośrednio na różowym tle */
     h1 {
         font-size: 60px !important;
         text-align: center;
         margin-bottom: 30px;
+        color: #4A2E35 !important;
     }
 
-    /* Stylizacja nagłówków wewnątrz kart */
-    .stHeader {
-        margin-top: 10px;
+    /* --- NOWE, PRECYZYJNE KARTY DLA PYTAŃ --- */
+    .karta-pytania {
+        background: white !important;
+        border-radius: 15px !important;
+        padding: 30px !important;
+        margin-top: 10px !important;
+        margin-bottom: 25px !important;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.06) !important;
+        text-align: center !important;
+        position: relative !important;
+        z-index: 10 !important; /* Karty są wyżej niż kosmici */
     }
 
-    /* Pytania mają fuksjowy kolor i są boldowane */
+    /* Styl tekstu pytania wewnątrz karty */
     .pytanie {
         color: #FF00FF !important;
-        font-weight: bold;
+        font-weight: bold !important;
         font-size: 30px !important;
+        margin: 0 !important;
     }
 
     /* --- ANIMACJA SPADAJĄCYCH GWIAZDEK (FINAŁ) --- */
@@ -50,41 +60,41 @@ st.markdown(
         pointer-events: none;
         animation: fall 4.5s linear forwards;
         z-index: 9999;
+        background: transparent !important;
+        box-shadow: none !important;
     }
 
     /* --- ANIMACJA LATAJĄCYCH KOSMITÓW W TLE --- */
     @keyframes flyAcross {
-        0% { left: -100px; transform: translateY(0px) rotate(0deg); opacity: 0; }
-        10% { opacity: 0.4; } /* Kosmici są lekko przezroczyści, żeby nie przeszkadzać */
-        90% { opacity: 0.4; }
-        100% { left: 100vw; transform: translateY(50px) rotate(15deg); opacity: 0; }
+        0% { left: -100px; transform: translateY(0px) rotate(0deg); }
+        100% { left: 100vw; transform: translateY(60px) rotate(360deg); }
     }
-    
+
     .alien {
         position: fixed;
         pointer-events: none;
         animation: flyAcross linear infinite;
-        z-index: 0; /* Chowają się za białymi kartami pytań */
-        font-size: 50px !important;
+        opacity: 0.35; /* Lekka przezroczystość, żeby subtelnie wtapiały się w tło */
+        z-index: 1; /* Kosmici latają NAD różowym tłem, ale POD kartami i przyciskami */
+        font-size: 55px !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
     }
-    
-    /* Różne czasy wylotu i wysokości dla każdego ufo */
-    .ufo1 { top: 15%; animation-duration: 25s; animation-delay: 1s; }
-    .ufo2 { top: 40%; animation-duration: 35s; animation-delay: 8s; }
-    .ufo3 { top: 75%; animation-duration: 20s; animation-delay: 15s; }
 
-    /* Główne karty z pytaniami */
-    .stApp div[data-testid="stMarkdownContainer"] > div {
-        background: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    /* Różne wysokości i czasy przelotu dla każdego ufo */
+    .ufo1 { top: 12%; animation-duration: 22s; animation-delay: 0s; }
+    .ufo2 { top: 45%; animation-duration: 30s; animation-delay: 6s; }
+    .ufo3 { top: 78%; animation-duration: 18s; animation-delay: 12s; }
+    .ufo4 { top: 90%; animation-duration: 22s; animation-delay: 0s; }
+
+    /* Zabezpieczenie przycisków, aby też były nad kosmitami */
+    div.stButton {
         position: relative;
-        z-index: 2; /* Karty lecą nad kosmitami */
+        z-index: 10;
     }
 
-    /* Styl kart odpowiedzi (przycisków) */
+    /* Styl przycisków odpowiedzi */
     div.stButton > button {
         background-color: white;
         color: #4A2E35;
@@ -96,7 +106,8 @@ st.markdown(
         transition: background-color 0.3s ease;
         text-transform: none;
         padding: 10px 20px;
-        margin: 10px;
+        margin: 10px auto;
+        display: block;
     }
 
     div.stButton > button:hover {
@@ -104,31 +115,18 @@ st.markdown(
         color: #4A2E35;
         border-color: #DDDDDD;
     }
-
-    .stApp div.stMarkdown > div:not(:first-child) {
-        border: none;
-        box-shadow: none;
-        background: transparent;
-        padding: 0px;
-    }
-
-    .stApp .stMarkdown p {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        padding: 0px;
-    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# Wstrzyknięcie kosmitów latających pętli w tle
+# Wstrzyknięcie czystych kosmitów w tło (całkowicie bez kafelków)
 st.markdown(
     """
     <div class="alien ufo1">🛸</div>
     <div class="alien ufo2">👽</div>
     <div class="alien ufo3">🛸</div>
+    <div class="alien ufo4">👽</div>
     """,
     unsafe_allow_html=True
 )
@@ -172,11 +170,11 @@ elif st.session_state['odpowiedz_1'] == "tak":
         if st.button("nie", key="odp_2_nie"):
             st.session_state['odpowiedz_2'] = "nie"
     with col3_2:
-        if st.button("za wcześnie", key="odp_3_nie"):
-            st.session_state['odpowiedz_3'] = "za wcześnie"
+        if st.button("za wcześnie", key="odp_2_zawczesnie"):
+            st.session_state['odpowiedz_2'] = "za wcześnie"
     if st.session_state['odpowiedz_2'] == "nie":
         st.write("zanotowano")
-    if st.session_state['odpowiedz_3'] == "za wcześnie":
+    if st.session_state['odpowiedz_2'] == "za wcześnie":
         st.write("zanotowano")
     elif st.session_state['odpowiedz_2'] == "tak":
         st.write("---")
