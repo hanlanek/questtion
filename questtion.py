@@ -138,7 +138,7 @@ elif st.session_state['odpowiedz_1'] == "tak":
     st.write("---")
 
     # --- KROK 2 (pojawia się tylko po wybraniu "raczej tak") ---
-    st.markdown('<p class="stHeader vraag pytanie">Mogę nazywać cię swoim chłopakiem? 💕</p>', unsafe_allow_html=True)
+    st.markdown('<p class="stHeader vraag pytanie"> Nazywać cię swoim chłopakiem? </p>', unsafe_allow_html=True)
     st.write("---")
 
     if 'odpowiedz_2' not in st.session_state:
@@ -154,12 +154,12 @@ elif st.session_state['odpowiedz_1'] == "tak":
             st.session_state['odpowiedz_2'] = "nie"
 
     if st.session_state['odpowiedz_2'] == "nie":
-        st.write("Opa")
+        st.write("zanotowano")
     elif st.session_state['odpowiedz_2'] == "tak":
         st.write("---")
 
         # --- KROK 3 (pojawia się tylko po drugim "tak") ---
-        st.markdown('<p class="stHeader vraag pytanie">Albo oblubieńcem?</p>', unsafe_allow_html=True)
+        st.markdown('<p class="stHeader vraag pytanie">Czy może oblubieńcem?</p>', unsafe_allow_html=True)
         st.write("---")
 
         if 'odpowiedz_3' not in st.session_state:
@@ -184,4 +184,4 @@ elif st.session_state['odpowiedz_1'] == "tak":
                 for _ in range(60)
             ])
             st.markdown(star_html, unsafe_allow_html=True)
-            st.success("YAY zip zip zab zab👽! 🥰🎉✨")
+            st.success("oke zip zip zab zab👽! 🥰🎉✨")
