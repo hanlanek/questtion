@@ -39,7 +39,7 @@ st.markdown(
         font-size: 30px !important;
     }
 
-    /* Kod na animację spadających gwiazdek */
+    /* --- ANIMACJA SPADAJĄCYCH GWIAZDEK (FINAŁ) --- */
     @keyframes fall {
         0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
         100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
@@ -52,6 +52,27 @@ st.markdown(
         z-index: 9999;
     }
 
+    /* --- ANIMACJA LATAJĄCYCH KOSMITÓW W TLE --- */
+    @keyframes flyAcross {
+        0% { left: -100px; transform: translateY(0px) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.4; } /* Kosmici są lekko przezroczyści, żeby nie przeszkadzać */
+        90% { opacity: 0.4; }
+        100% { left: 100vw; transform: translateY(50px) rotate(15deg); opacity: 0; }
+    }
+    
+    .alien {
+        position: fixed;
+        pointer-events: none;
+        animation: flyAcross linear infinite;
+        z-index: 0; /* Chowają się za białymi kartami pytań */
+        font-size: 50px !important;
+    }
+    
+    /* Różne czasy wylotu i wysokości dla każdego ufo */
+    .ufo1 { top: 15%; animation-duration: 25s; animation-delay: 1s; }
+    .ufo2 { top: 40%; animation-duration: 35s; animation-delay: 8s; }
+    .ufo3 { top: 75%; animation-duration: 20s; animation-delay: 15s; }
+
     /* Główne karty z pytaniami */
     .stApp div[data-testid="stMarkdownContainer"] > div {
         background: white;
@@ -59,14 +80,8 @@ st.markdown(
         padding: 20px;
         margin-bottom: 20px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    /* Kontener dla kart odpowiedzi */
-    .odpowiedzi-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 20px;
+        position: relative;
+        z-index: 2; /* Karty lecą nad kosmitami */
     }
 
     /* Styl kart odpowiedzi (przycisków) */
@@ -79,19 +94,17 @@ st.markdown(
         font-weight: bold;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        text-transform: none; /* Wyłącz duże litery */
+        text-transform: none;
         padding: 10px 20px;
         margin: 10px;
     }
 
-    /* Efekt hover dla kart odpowiedzi */
     div.stButton > button:hover {
         background-color: #DDDDDD;
         color: #4A2E35;
         border-color: #DDDDDD;
     }
 
-    /* Stylizacja sekcji z logiką - po kliknięciu odpowiedzi (np. "if Q1 = ...") */
     .stApp div.stMarkdown > div:not(:first-child) {
         border: none;
         box-shadow: none;
@@ -99,7 +112,6 @@ st.markdown(
         padding: 0px;
     }
 
-    /* Teksty pod kartami nie mają tła */
     .stApp .stMarkdown p {
         background: transparent;
         border: none;
@@ -111,17 +123,24 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Wstrzyknięcie kosmitów latających pętli w tle
+st.markdown(
+    """
+    <div class="alien ufo1">🛸</div>
+    <div class="alien ufo2">👽</div>
+    <div class="alien ufo3">🛸</div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("✨ ⭐ ✨ ⭐ ✨")
 
 # --- KROK 1 ---
 st.markdown('<p class="stHeader vraag pytanie">Cześć, lubisz formalności społeczne w relacjach? ✨</p>', unsafe_allow_html=True)
 st.write("---")
 
-# Używamy sesji, żeby zapamiętać wybraną odpowiedź
 if 'odpowiedz_1' not in st.session_state:
     st.session_state['odpowiedz_1'] = None
-
-# Tworzymy dwie kolumny dla kart odpowiedzi
 col1_1, col2_1 = st.columns(2)
 
 with col1_1:
