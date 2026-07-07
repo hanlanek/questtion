@@ -144,7 +144,7 @@ elif st.session_state['odpowiedz_1'] == "tak":
     if 'odpowiedz_2' not in st.session_state:
         st.session_state['odpowiedz_2'] = None
 
-    col1_2, col2_2 = st.columns(2)
+    col1_2, col2_2 , col3_2 = st.columns(3)
 
     with col1_2:
         if st.button("tak", key="odp_2_tak"):
@@ -152,8 +152,12 @@ elif st.session_state['odpowiedz_1'] == "tak":
     with col2_2:
         if st.button("nie", key="odp_2_nie"):
             st.session_state['odpowiedz_2'] = "nie"
-
+    with col3_2:
+        if st.button("za wcześnie", key="odp_3_nie"):
+            st.session_state['odpowiedz_3'] = "za wcześnie"
     if st.session_state['odpowiedz_2'] == "nie":
+        st.write("zanotowano")
+    if st.session_state['odpowiedz_3'] == "za wcześnie":
         st.write("zanotowano")
     elif st.session_state['odpowiedz_2'] == "tak":
         st.write("---")
