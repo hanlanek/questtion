@@ -142,7 +142,7 @@ if 'odpowiedz_1' not in st.session_state:
 col1_1, col2_1 = st.columns(2)
 
 with col1_1:
-    if st.button("raczej tak", key="odp_1_tak"):
+    if st.button("tak", key="odp_1_tak"):
         st.session_state['odpowiedz_1'] = "tak"
 with col2_1:
     if st.button("no nie wiem", key="odp_1_nie"):
