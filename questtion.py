@@ -134,7 +134,7 @@ st.markdown(
 st.title("✨ ⭐ ✨ ⭐ ✨")
 
 # --- KROK 1 ---
-st.markdown('<p class="stHeader vraag pytanie">Cześć, lubisz formalności społeczne w relacjach? ✨</p>', unsafe_allow_html=True)
+st.markdown('<p class="stHeader vraag pytanie">Cześć mogę być Twoja? ✨</p>', unsafe_allow_html=True)
 st.write("---")
 
 if 'odpowiedz_1' not in st.session_state:
@@ -150,12 +150,12 @@ with col2_1:
 
 # Logika po wybraniu odpowiedzi w kroku 1
 if st.session_state['odpowiedz_1'] == "nie":
-    st.markdown('<p class="stHeader vraag">to jak mogę Ciebie nazywać?</p>', unsafe_allow_html=True)
+    st.markdown('<p class="stHeader vraag"> sorry missclick </p>', unsafe_allow_html=True)
 elif st.session_state['odpowiedz_1'] == "tak":
     st.write("---")
 
     # --- KROK 2 (pojawia się tylko po wybraniu "raczej tak") ---
-    st.markdown('<p class="stHeader vraag pytanie"> Nazywać cię swoim chłopakiem? </p>', unsafe_allow_html=True)
+    st.markdown('<p class="stHeader vraag pytanie"> Czy nazywać cię swoim chłopakiem? </p>', unsafe_allow_html=True)
     st.write("---")
 
     if 'odpowiedz_2' not in st.session_state:
